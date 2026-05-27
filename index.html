@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Monthsary, My Love 💚</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- PASSCODE LOCK SCREEN -->
+    <div id="passcodeModal" class="passcode-modal">
+        <div class="passcode-container">
+            <div class="passcode-content">
+                <h1 class="passcode-title">Our Special Date 💚</h1>
+                <p class="passcode-subtitle">What date did our love story begin?</p>
+                
+                <div class="passcode-input-container">
+                    <input 
+                        type="password" 
+                        id="passcodeInput" 
+                        class="passcode-input" 
+                        placeholder="Enter the day..." 
+                        maxlength="2"
+                        inputmode="numeric"
+                    >
+                    <div class="passcode-hint">Hint: When did you say "yes" to me? 📅</div>
+                </div>
+
+                <button id="passcodeBtn" class="passcode-submit-btn">Unlock 🔓</button>
+                
+                <div id="passcodeError" class="passcode-error"></div>
+            </div>
+            
+            <div class="floating-lock">🔒</div>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden until passcode is correct) -->
+    <div id="mainContent" class="main-content hidden">
+        <!-- Floating Particles Background -->
+        <div class="particles-container" id="particlesContainer"></div>
+    
+    <!-- Floating Flower Petals -->
+    <div class="petals-container" id="petalsContainer"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">💚 Monthsary</div>
+            <ul class="nav-menu">
+                <li><a href="#hero" class="nav-link">Home</a></li>
+                <li><a href="#timeline" class="nav-link">Our Story</a></li>
+                <li><a href="#reasons" class="nav-link">Why I Love You</a></li>
+                <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                <li><a href="#letter" class="nav-link">Love Letter</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 1. HERO SECTION -->
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <div class="flower-decoration flower-top-left">🌷</div>
+            <div class="flower-decoration flower-top-right">🌹</div>
+            
+            <h1 class="hero-title">Happy Monthsary, My Love</h1>
+            <p class="hero-subtitle">Another month of loving you more than yesterday</p>
+            
+            <div class="glowing-hearts">
+                <div class="heart"></div>
+                <div class="heart"></div>
+                <div class="heart"></div>
+            </div>
+
+            <div class="couple-photo-showcase">
+                <div class="photo-frame frame-1">
+                    <img src="https://via.placeholder.com/200x250/a8d5ba/ffffff?text=You+%26+Me" alt="Couple photo">
+                </div>
+                <div class="photo-frame frame-2">
+                    <img src="https://via.placeholder.com/200x250/a8d5ba/ffffff?text=Us" alt="Couple photo">
+                </div>
+            </div>
+
+            <button class="cta-button">Explore Our Love Story ↓</button>
+        </div>
+    </section>
+
+    <!-- 2. COUNTDOWN TIMER -->
+    <section id="countdown" class="countdown-section">
+        <h2>Until Our Next Monthsary</h2>
+        <div class="countdown-container">
+            <div class="countdown-item">
+                <div class="countdown-number" id="days">00</div>
+                <div class="countdown-label">Days</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="hours">00</div>
+                <div class="countdown-label">Hours</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="minutes">00</div>
+                <div class="countdown-label">Minutes</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="seconds">00</div>
+                <div class="countdown-label">Seconds</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. LOVE STORY TIMELINE -->
+    <section id="timeline" class="timeline-section">
+        <h2>Our Love Story</h2>
+        <div class="timeline-container">
+            <div class="timeline-item left">
+                <div class="timeline-card">
+                    <div class="timeline-date">Month 1</div>
+                    <div class="timeline-content">
+                        <h3>The Beginning</h3>
+                        <p>When I first saw you, my heart knew it had found its home.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item right">
+                <div class="timeline-card">
+                    <div class="timeline-date">Month 3</div>
+                    <div class="timeline-content">
+                        <h3>First Adventure</h3>
+                        <p>Every moment with you feels like a beautiful dream I never want to wake up from.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item left">
+                <div class="timeline-card">
+                    <div class="timeline-date">Month 6</div>
+                    <div class="timeline-content">
+                        <h3>Growing Stronger</h3>
+                        <p>With you, I discovered the meaning of unconditional love.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item right">
+                <div class="timeline-card">
+                    <div class="timeline-date">Today</div>
+                    <div class="timeline-content">
+                        <h3>Forever Starts Now</h3>
+                        <p>And this is just the beginning of our beautiful story together.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. REASONS WHY I LOVE YOU -->
+    <section id="reasons" class="reasons-section">
+        <h2>Reasons Why I Love You</h2>
+        <div class="reasons-container">
+            <div class="reason-card">
+                <div class="reason-icon">✨</div>
+                <h3>Your Smile</h3>
+                <p>It lights up my entire world and makes everything feel right.</p>
+                <div class="heart-click">💚</div>
+            </div>
+
+            <div class="reason-card">
+                <div class="reason-icon">🌸</div>
+                <h3>Your Kindness</h3>
+                <p>The way you care for others inspires me to be better every day.</p>
+                <div class="heart-click">💚</div>
+            </div>
+
+            <div class="reason-card">
+                <div class="reason-icon">🎵</div>
+                <h3>Your Laugh</h3>
+                <p>Every laugh of yours is a melody that touches my soul.</p>
+                <div class="heart-click">💚</div>
+            </div>
+
+            <div class="reason-card">
+                <div class="reason-icon">🌟</div>
+                <h3>Your Dreams</h3>
+                <p>I believe in your vision and will support you always.</p>
+                <div class="heart-click">💚</div>
+            </div>
+
+            <div class="reason-card">
+                <div class="reason-icon">💫</div>
+                <h3>Your Presence</h3>
+                <p>Simply being near you makes everything feel peaceful and safe.</p>
+                <div class="heart-click">💚</div>
+            </div>
+
+            <div class="reason-card">
+                <div class="reason-icon">🌿</div>
+                <h3>Your Love</h3>
+                <p>The way you love me makes me feel like I'm the luckiest person alive.</p>
+                <div class="heart-click">💚</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. GALLERY SECTION -->
+    <section id="gallery" class="gallery-section">
+        <h2>Our Beautiful Moments</h2>
+        <div class="gallery-container">
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/300x300/a8d5ba/ffffff?text=Memory+1" alt="Memory">
+                <div class="gallery-overlay">
+                    <p>A moment in time</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/300x300/a8d5ba/ffffff?text=Memory+2" alt="Memory">
+                <div class="gallery-overlay">
+                    <p>Pure happiness</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/300x300/a8d5ba/ffffff?text=Memory+3" alt="Memory">
+                <div class="gallery-overlay">
+                    <p>Unforgettable</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/300x300/a8d5ba/ffffff?text=Memory+4" alt="Memory">
+                <div class="gallery-overlay">
+                    <p>Forever cherished</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/300x300/a8d5ba/ffffff?text=Memory+5" alt="Memory">
+                <div class="gallery-overlay">
+                    <p>Love in focus</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <img src="https://via.placeholder.com/300x300/a8d5ba/ffffff?text=Memory+6" alt="Memory">
+                <div class="gallery-overlay">
+                    <p>Together always</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. MUSIC PLAYER -->
+    <section id="music" class="music-section">
+        <div class="music-container">
+            <div class="vinyl-record" id="vinylRecord">
+                <div class="vinyl-inner"></div>
+                <div class="needle"></div>
+            </div>
+
+            <div class="music-controls">
+                <h3>Our Love Playlist</h3>
+                <p>Playing: "Endless Love"</p>
+                
+                <div class="player-controls">
+                    <button class="player-btn" id="prevBtn">⏮</button>
+                    <button class="player-btn play-btn" id="playBtn">▶</button>
+                    <button class="player-btn" id="nextBtn">⏭</button>
+                </div>
+
+                <div class="volume-control">
+                    <label for="volumeSlider">Volume</label>
+                    <input type="range" id="volumeSlider" min="0" max="100" value="50" class="volume-slider" aria-label="Volume control slider">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. LOVE LETTER SECTION -->
+    <section id="letter" class="letter-section">
+        <div class="letter-container">
+            <div class="envelope" id="envelope">
+                <div class="envelope-flap"></div>
+                <div class="envelope-body"></div>
+            </div>
+
+            <div class="letter-content" id="letterContent">
+                <div class="letter-header">
+                    <p class="letter-date" id="letterDate"></p>
+                </div>
+                <div class="letter-body">
+                    <p>My Dearest Love,</p>
+                    <p>
+                        Words could never be enough to express what you mean to me. Every day with you is a gift, 
+                        a precious moment that I'll treasure forever. Your love has transformed my life in ways I 
+                        never thought possible.
+                    </p>
+                    <p>
+                        From the moment you entered my life, everything became more beautiful, more meaningful, and 
+                        more whole. You are my greatest adventure, my safest harbor, and my deepest joy.
+                    </p>
+                    <p>
+                        I promise to love you through every season, to celebrate your victories as my own, to support 
+                        your dreams, and to be your constant companion through this beautiful journey called life.
+                    </p>
+                    <p>
+                        Thank you for choosing to spend these precious months with me. Here's to many more monthsaries, 
+                        anniversaries, and a lifetime of love.
+                    </p>
+                    <p class="letter-closing">
+                        Forever yours,<br>
+                        <span class="handwritten">Your Love</span>
+                    </p>
+                </div>
+            </div>
+
+            <button class="letter-button" id="letterBtn">Click to Read My Letter 💌</button>
+        </div>
+    </section>
+
+    <!-- 8. FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-message">Here's to you, my love. Forever and always. 💚✨</p>
+            
+            <div class="footer-flowers">
+                <span>🌹</span>
+                <span>🌷</span>
+                <span>🌸</span>
+                <span>🌷</span>
+                <span>🌹</span>
+            </div>
+
+            <div class="footer-stars">
+                <div class="firefly"></div>
+                <div class="firefly"></div>
+                <div class="firefly"></div>
+                <div class="firefly"></div>
+                <div class="firefly"></div>
+            </div>
+
+            <p class="footer-signature">Made with love on <span id="currentDate"></span></p>
+        </div>
+    </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
