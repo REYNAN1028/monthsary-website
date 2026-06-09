@@ -22,14 +22,57 @@ A beautiful, modern, and romantic monthsary website designed for couples to cele
 ⏰ Countdown timer to next monthsary
 📸 Responsive photo gallery with hover effects
 
+## 🎵 Music Playlist Feature (NEW!)
+
+Your monthsary website now includes a **fully functional music player** with playlist support!
+
+### Features:
+✅ **Play/Pause Control** - Start and pause your music  
+✅ **Album Artwork** - Display custom images for each song  
+✅ **Spinning Vinyl Animation** - Classic vinyl record animation while playing  
+✅ **Volume Control** - Adjust volume with slider  
+✅ **Progress Bar** - See and control current playback position  
+✅ **Next/Previous Buttons** - Navigate through your playlist  
+✅ **Interactive Playlist** - Click songs to play them  
+✅ **Auto-advance** - Automatically plays next song when current ends  
+✅ **Time Display** - Shows current time and total duration  
+✅ **Fully Responsive** - Works beautifully on mobile devices  
+
+### Quick Setup:
+
+**For detailed instructions, see [MUSIC_PLAYLIST_GUIDE.md](MUSIC_PLAYLIST_GUIDE.md)**
+
+1. Open `script.js` and find the `playlist` array
+2. Replace the example songs with your music URLs
+3. Add custom album images
+4. Save and refresh your browser
+
+### Example:
+```javascript
+const playlist = [
+    {
+        title: "Our Special Song",
+        artist: "Your Names",
+        url: "https://example.com/song.mp3",
+        image: "https://example.com/image.jpg",
+        duration: 240
+    }
+];
+```
+
+💡 **Tip:** Use free music from [Pixabay Music](https://pixabay.com/music/) or upload your own music to a free host like [Imgbb](https://imgbb.com).
+
+---
+
 ## 📦 Project Structure
 
 ```
 Montsary website/
-├── index.html          # Main HTML file with all sections
-├── styles.css          # Complete styling and animations
-├── script.js           # Interactive features and animations
-└── README.md           # This file
+├── index.html                  # Main HTML file with all sections
+├── styles.css                  # Complete styling and animations
+├── script.js                   # Interactive features and music player
+├── README.md                   # Project documentation
+└── MUSIC_PLAYLIST_GUIDE.md    # Detailed music setup guide
 ```
 
 ## 🚀 Quick Start

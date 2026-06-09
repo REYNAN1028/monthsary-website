@@ -53,6 +53,7 @@
                 <li><a href="#timeline" class="nav-link">Our Story</a></li>
                 <li><a href="#reasons" class="nav-link">Why I Love You</a></li>
                 <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                <li><a href="#music" class="nav-link">Music</a></li>
                 <li><a href="#letter" class="nav-link">Love Letter</a></li>
             </ul>
         </div>
@@ -75,10 +76,10 @@
 
             <div class="couple-photo-showcase">
                 <div class="photo-frame frame-1">
-                    <img src="https://via.placeholder.com/200x250/a8d5ba/ffffff?text=You+%26+Me" alt="Couple photo">
+                    <img src="c:\Users\LENOVO\Pictures\For our monthsary\for us\IMG_20260530_143048.jpg" alt="Couple photo">
                 </div>
                 <div class="photo-frame frame-2">
-                    <img src="https://via.placeholder.com/200x250/a8d5ba/ffffff?text=Us" alt="Couple photo">
+                    <img src="c:\Users\LENOVO\Pictures\For our monthsary\for us\IMG_20251230_195019.jpg" alt="Couple photo">
                 </div>
             </div>
 
@@ -208,14 +209,14 @@
         <h2>Our Beautiful Moments</h2>
         <div class="gallery-container">
             <div class="gallery-item">
-                <img src="https://via.placeholder.com/300x300/a8d5ba/ffffff?text=Memory+1" alt="Memory">
+                <img src="c:\Users\LENOVO\Pictures\For our monthsary\for us\Screenshot_20260521-201402" alt="Memory">
                 <div class="gallery-overlay">
                     <p>A moment in time</p>
                 </div>
             </div>
 
             <div class="gallery-item">
-                <img src="https://via.placeholder.com/300x300/a8d5ba/ffffff?text=Memory+2" alt="Memory">
+                <img src="c:\Users\LENOVO\Pictures\For our monthsary\for us\Screenshot_20260509-221035" alt="Memory">
                 <div class="gallery-overlay">
                     <p>Pure happiness</p>
                 </div>
@@ -251,28 +252,53 @@
         </div>
     </section>
 
-    <!-- 6. MUSIC PLAYER -->
+    <!-- 6. MUSIC PLAYLIST SECTION -->
     <section id="music" class="music-section">
-        <div class="music-container">
-            <div class="vinyl-record" id="vinylRecord">
-                <div class="vinyl-inner"></div>
-                <div class="needle"></div>
+        <h2>Our Love Playlist 🎵</h2>
+        
+        <!-- Main Music Player -->
+        <div class="player-container">
+            <div class="now-playing-image">
+                <img id="albumArt" src="https://via.placeholder.com/300x300/a8d5ba/ffffff?text=Your+Song" alt="Album Art">
+                <div class="vinyl-record" id="vinylRecord">
+                    <div class="vinyl-inner"></div>
+                    <div class="needle"></div>
+                </div>
             </div>
 
             <div class="music-controls">
-                <h3>Our Love Playlist</h3>
-                <p>Playing: "Endless Love"</p>
+                <div class="song-info">
+                    <h3 id="songTitle">Our Special Song</h3>
+                    <p id="artistName">Your Favorite Artist</p>
+                </div>
                 
-                <div class="player-controls">
-                    <button class="player-btn" id="prevBtn">⏮</button>
-                    <button class="player-btn play-btn" id="playBtn">▶</button>
-                    <button class="player-btn" id="nextBtn">⏭</button>
+                <!-- Audio Player -->
+                <audio id="audioPlayer" class="hidden-audio"></audio>
+                
+                <div class="progress-bar-container">
+                    <span id="currentTime">0:00</span>
+                    <input type="range" id="progressBar" class="progress-bar" min="0" max="100" value="0" title="Song progress" aria-label="Song progress">
+                    <span id="duration">0:00</span>
+                </div>
+
+                <div class="player-buttons">
+                    <button class="player-btn" id="prevBtn" title="Previous Song">⏮</button>
+                    <button class="player-btn play-btn" id="playBtn" title="Play/Pause">▶</button>
+                    <button class="player-btn" id="nextBtn" title="Next Song">⏭</button>
                 </div>
 
                 <div class="volume-control">
-                    <label for="volumeSlider">Volume</label>
-                    <input type="range" id="volumeSlider" min="0" max="100" value="50" class="volume-slider" aria-label="Volume control slider">
+                    <span class="volume-icon">🔊</span>
+                    <input type="range" id="volumeSlider" min="0" max="100" value="60" class="volume-slider" aria-label="Volume control">
                 </div>
+            </div>
+        </div>
+
+        <!-- Playlist -->
+        <div class="playlist-container">
+            <h3>Playlist Songs</h3>
+            <div class="playlist" id="playlist">
+                <!-- Playlist items will be generated by JavaScript -->
             </div>
         </div>
     </section>

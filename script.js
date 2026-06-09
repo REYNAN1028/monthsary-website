@@ -196,41 +196,214 @@ document.addEventListener('click', (e) => {
 });
 
 // ============================
-// MUSIC PLAYER
+// MUSIC PLAYER - FULLY FUNCTIONAL
 // ============================
 
-const vinylRecord = document.getElementById('vinylRecord');
+// Playlist with sample songs (UPDATE THESE WITH YOUR MUSIC URLs)
+const playlist = [
+    {
+        title: "Our Special Song",
+        artist: "Your Favorite Artist",
+        url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+        image: "https://via.placeholder.com/300x300/a8d5ba/ffffff?text=Your+Song+1",
+        duration: 360
+    },
+    {
+        title: "Love in Every Moment",
+        artist: "Beautiful Melodies",
+        url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+        image: "https://via.placeholder.com/300x300/b8e6d5/ffffff?text=Your+Song+2",
+        duration: 320
+    },
+    {
+        title: "Forever With You",
+        artist: "Romantic Dreams",
+        url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+        image: "https://via.placeholder.com/300x300/c8dcc4/ffffff?text=Your+Song+3",
+        duration: 280
+    },
+    {
+        title: "Moonlight Memories",
+        artist: "Soft Melodies",
+        url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+        image: "https://via.placeholder.com/300x300/d5f0e8/ffffff?text=Your+Song+4",
+        duration: 340
+    },
+    {
+        title: "Hearts Intertwined",
+        artist: "Love Songs Collection",
+        url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
+        image: "https://via.placeholder.com/300x300/e8f5f0/ffffff?text=Your+Song+5",
+        duration: 300
+    }
+];
+
+let currentSongIndex = 0;
+let isPlaying = false;
+
+// Get elements
+const audioPlayer = document.getElementById('audioPlayer');
 const playBtn = document.getElementById('playBtn');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 const volumeSlider = document.getElementById('volumeSlider');
+const progressBar = document.getElementById('progressBar');
+const songTitle = document.getElementById('songTitle');
+const artistName = document.getElementById('artistName');
+const albumArt = document.getElementById('albumArt');
+const vinylRecord = document.getElementById('vinylRecord');
+const playlistContainer = document.getElementById('playlist');
+const currentTimeDisplay = document.getElementById('currentTime');
+const durationDisplay = document.getElementById('duration');
 
-let isPlaying = false;
+// Initialize player
+function initializePlayer() {
+    loadSong(currentSongIndex);
+    renderPlaylist();
+    setupEventListeners();
+}
 
-playBtn.addEventListener('click', () => {
-    isPlaying = !isPlaying;
+// Load song
+function loadSong(index) {
+    if (index >= playlist.length) {
+        currentSongIndex = 0;
+        index = 0;
+    }
+    if (index < 0) {
+        currentSongIndex = playlist.length - 1;
+        index = playlist.length - 1;
+    }
+
+    const song = playlist[index];
+    audioPlayer.src = song.url;
+    songTitle.textContent = song.title;
+    artistName.textContent = song.artist;
+    albumArt.src = song.image;
+    albumArt.alt = song.title;
+
+    // Update playlist highlighting
+    document.querySelectorAll('.playlist-item').forEach((item, i) => {
+        item.classList.remove('active');
+        if (i === index) {
+            item.classList.add('active');
+        }
+    });
+
+    currentSongIndex = index;
+}
+
+// Play/Pause
+function togglePlay() {
     if (isPlaying) {
-        vinylRecord.classList.add('playing');
+        audioPlayer.pause();
+        playBtn.textContent = '▶';
+        playBtn.style.background = 'linear-gradient(135deg, #6ccc8f, #52b788)';
+        vinylRecord.classList.remove('playing');
+    } else {
+        audioPlayer.play();
         playBtn.textContent = '⏸';
         playBtn.style.background = 'linear-gradient(135deg, #ff6b6b, #ff8a80)';
-    } else {
-        vinylRecord.classList.remove('playing');
-        playBtn.textContent = '▶';
-        playBtn.style.background = 'linear-gradient(135deg, var(--sage-green), var(--pastel-green))';
+        vinylRecord.classList.add('playing');
     }
-});
+    isPlaying = !isPlaying;
+}
 
-prevBtn.addEventListener('click', () => {
+// Next song
+function nextSong() {
+    currentSongIndex++;
+    loadSong(currentSongIndex);
     if (isPlaying) {
-        playBtn.click();
+        audioPlayer.play();
     }
-});
+}
 
-nextBtn.addEventListener('click', () => {
+// Previous song
+function prevSong() {
+    currentSongIndex--;
+    loadSong(currentSongIndex);
     if (isPlaying) {
-        playBtn.click();
+        audioPlayer.play();
     }
-});
+}
+
+// Format time (seconds to MM:SS)
+function formatTime(seconds) {
+    if (isNaN(seconds)) return '0:00';
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+}
+
+// Update progress bar
+function updateProgressBar() {
+    if (audioPlayer.duration) {
+        const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+        progressBar.value = progress;
+        currentTimeDisplay.textContent = formatTime(audioPlayer.currentTime);
+        durationDisplay.textContent = formatTime(audioPlayer.duration);
+    }
+}
+
+// Set progress
+function setProgress(e) {
+    if (audioPlayer.duration) {
+        const percent = (e.target.value / 100);
+        audioPlayer.currentTime = percent * audioPlayer.duration;
+    }
+}
+
+// Set volume
+function setVolume(e) {
+    audioPlayer.volume = e.target.value / 100;
+}
+
+// Render playlist
+function renderPlaylist() {
+    playlistContainer.innerHTML = '';
+    playlist.forEach((song, index) => {
+        const item = document.createElement('div');
+        item.className = 'playlist-item';
+        if (index === currentSongIndex) {
+            item.classList.add('active');
+        }
+        item.innerHTML = `
+            <img src="${song.image}" alt="${song.title}" class="playlist-item-image">
+            <div class="playlist-item-info">
+                <div class="playlist-item-title">${song.title}</div>
+                <div class="playlist-item-artist">${song.artist}</div>
+            </div>
+            <div class="playlist-item-duration">${formatTime(song.duration)}</div>
+        `;
+        item.addEventListener('click', () => {
+            currentSongIndex = index;
+            loadSong(currentSongIndex);
+            togglePlay();
+        });
+        playlistContainer.appendChild(item);
+    });
+}
+
+// Setup event listeners
+function setupEventListeners() {
+    playBtn.addEventListener('click', togglePlay);
+    nextBtn.addEventListener('click', nextSong);
+    prevBtn.addEventListener('click', prevSong);
+    volumeSlider.addEventListener('input', setVolume);
+    progressBar.addEventListener('input', setProgress);
+    
+    // Update progress bar as song plays
+    audioPlayer.addEventListener('timeupdate', updateProgressBar);
+    
+    // Play next song when current ends
+    audioPlayer.addEventListener('ended', nextSong);
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializePlayer);
+} else {
+    initializePlayer();
+}
 
 // ============================
 // SMOOTH SCROLL BEHAVIOR
