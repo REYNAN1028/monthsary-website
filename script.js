@@ -799,180 +799,181 @@ document.addEventListener('DOMContentLoaded', setupGalleryListeners);
  */
 const fullscreenGalleryImages = [
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260314-214716.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260314-214716.png',
+        thumb: 'images/img3.png',
+        full: 'images/img3.png',
         caption: '💚 A moment in time'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260509-221035.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260509-221035.png',
+        thumb: 'images/img4.png',
+        full: 'images/img4.png',
         caption: '✨ Pure happiness'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/IMG_20260530_142926.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/IMG_20260530_142926.png',
+        thumb: 'images/img5.png',
+        full: 'images/img5.png',
         caption: '🌹 Unforgettable'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/IMG_20260408_194249.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/IMG_20260408_194249.png',
+        thumb: 'images/img6.png',
+        full: 'images/img6.png',
         caption: '💫 Forever cherished'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260321-161014.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260321-161014.png',
+        thumb: 'images/img7.png',
+        full: 'images/img7.png',
         caption: '📸 Love in focus'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260531-082013.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260531-082013.png',
+        thumb: 'images/img8.png',
+        full: 'images/img8.png',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/IMG_20260105_224235_0209.jpg',
-        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/IMG_20260105_224235_0209.jpg',
+        thumb: 'images/img9.jpg',
+        full: 'images/img9.jpg',
+        caption: '💚 A moment in time'
+    },
+    {
+        thumb: 'images/img10.png',
+        full: 'images/img10.png',
+        caption: '✨ Pure happiness'
+    },
+    {
+        thumb: 'images/img11.png',
+        full: 'images/img11.png',
+        caption: '🌹 Unforgettable'
+    },
+    {
+        thumb: 'images/img12.png',
+        full: 'images/img12.png',
+        caption: '💫 Forever cherished'
+    },
+    {
+        thumb: 'images/img13.png',
+        full: 'images/img13.png',
+        caption: '📸 Love in focus'
+    },
+    {
+        thumb: 'images/img14.jpg',
+        full: 'images/img14.jpg',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/IMG_20260408_194028.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/IMG_20260408_194028.png',
+        thumb: 'images/img15.png',
+        full: 'images/img15.png',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260317-071735.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260317-071735.png',
+        thumb: 'images/img16.jpg',
+        full: 'images/img16.jpg',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260521-201402.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260521-201402.png',
+        thumb: 'images/img17.jpg',
+        full: 'images/img17.jpg',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260527-210323.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260527-210323.png',
+        thumb: 'images/img18.jpg',
+        full: 'images/img18.jpg',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/IMG_20251229_214950_380.jpg',
-        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/IMG_20251229_214950_380.jpg',
+        thumb: 'images/img19.jpg',
+        full: 'images/img19.jpg',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260321-161133.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260321-161133.png',
+        thumb: 'images/img20.jpg',
+        full: 'images/img20.jpg',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Screenshot 2026-01-23 140407.jpg',
-        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Screenshot 2026-01-23 140407.jpg',
+        thumb: 'images/img21.png',
+        full: 'images/img21.png',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/Screenshot 2026-01-25 222829.jpg',
-        full: 'file:///C:/Users/LENOVO/Pictures/Screenshot 2026-01-25 222829.jpg',
+        thumb: 'images/img22.png',
+        full: 'images/img22.png',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/IMG20260120211519.jpg',
-        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/IMG20260120211519.jpg',
+        thumb: 'images/img23.png',
+        full: 'images/img23.png',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/IMG20260527205123.jpg',
-        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/IMG20260527205123.jpg',
+        thumb: 'images/img24.png',
+        full: 'images/img24.png',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/IMG20260527205136.jpg',
-        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/IMG20260527205136.jpg',
+        thumb: 'images/img25.png',
+        full: 'images/img25.png',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260223-131400.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260223-131400.png',
+        thumb: 'images/img26.png',
+        full: 'images/img26.png',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260305-212913.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260305-212913.png',
+        thumb: 'images/img27.png',
+        full: 'images/img27.png',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260308-135326.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260308-135326.png',
+        thumb: 'images/img28.png',
+        full: 'images/img28.png',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260316-215651.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260316-215651.png',
+        thumb: 'images/img29.png',
+        full: 'images/img29.png',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260317-071722.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260317-071722.png',
+        thumb: 'images/img30.png',
+        full: 'images/img30.png',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260317-223024.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260317-223024.png',
+        thumb: 'images/img31.png',
+        full: 'images/img31.png',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260324-211509.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260324-211509.png',
+        thumb: 'images/img32.png',
+        full: 'images/img32.png',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-121732.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-121732.png',
+        thumb: 'images/img33.png',
+        full: 'images/img33.png',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-121744.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-121744.png',
+        thumb: 'images/img34.png',
+        full: 'images/img34.png',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-121909.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-121909.png',
-        caption: '👫 Together always'
-    },{
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-122028.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-122028.png',
+        thumb: 'images/img35.png',
+        full: 'images/img35.png',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-123314.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-123314.png',
+        thumb: 'images/img36.png',
+        full: 'images/img36.png',
         caption: '👫 Together always'
     },
     {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-123314.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-123314.png',
+        thumb: 'images/img37.png',
+        full: 'images/img37.png',
         caption: '👫 Together always'
     },
-    {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-205928.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-205928.png',
-        caption: '👫 Together always'
-    },
-    {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260401-170655.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260401-170655.png',
-        caption: '👫 Together always'
-    },
-    {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260403-151033.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260403-151033.png',
-        caption: '👫 Together always'
-    },
-    {
-        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260430-121159.png',
-        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260430-121159.png',
-        caption: '👫 Together always'
-    },
-    
+   
     // ADD MORE IMAGES BELOW - Copy the format above and paste new entries here
     // Example:
     // {
