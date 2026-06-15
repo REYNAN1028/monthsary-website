@@ -582,3 +582,831 @@ function setCustomColor(colorName, colorValue) {
 
 console.log('%cHappy Monthsary! 💚', 'font-size: 24px; color: #9caf88; font-weight: bold;');
 console.log('%cThis beautiful website was made with love ✨', 'font-size: 16px; color: #a8d5ba;');
+
+// ============================
+// IMAGE VIEWER MODAL - LIGHTBOX
+// ============================
+
+let currentImageIndex = 0;
+const imageModal = document.getElementById('imageModal');
+const modalImage = document.getElementById('modalImage');
+const modalCaption = document.getElementById('modalCaption');
+const modalClose = document.querySelector('.image-modal-close');
+const modalPrev = document.querySelector('.image-modal-prev');
+const modalNext = document.querySelector('.image-modal-next');
+
+// Gallery captions mapping
+const galleryGalleryItems = [
+    { caption: '💚 A moment in time' },
+    { caption: '✨ Pure happiness' },
+    { caption: '🌹 Unforgettable' },
+    { caption: '💫 Forever cherished' },
+    { caption: '📸 Love in focus' },
+    { caption: '👫 Together always' }
+];
+
+// Get all gallery items
+function getGalleryItems() {
+    return Array.from(document.querySelectorAll('.gallery-item'));
+}
+
+// Open image modal
+function openImageModal(index) {
+    const items = getGalleryItems();
+    if (index < 0) index = items.length - 1;
+    if (index >= items.length) index = 0;
+    
+    currentImageIndex = index;
+    const item = items[index];
+    const fullImageUrl = item.getAttribute('data-fullimage');
+    const caption = galleryGalleryItems[index]?.caption || 'Beautiful Moment';
+    
+    modalImage.src = fullImageUrl;
+    modalCaption.textContent = caption;
+    imageModal.classList.add('active');
+}
+
+// Close image modal
+function closeImageModal() {
+    imageModal.classList.remove('active');
+}
+
+// Navigate to next image
+function nextImage() {
+    const items = getGalleryItems();
+    currentImageIndex = (currentImageIndex + 1) % items.length;
+    openImageModal(currentImageIndex);
+}
+
+// Navigate to previous image
+function prevImage() {
+    const items = getGalleryItems();
+    currentImageIndex = (currentImageIndex - 1 + items.length) % items.length;
+    openImageModal(currentImageIndex);
+}
+
+// Add click listeners to all gallery items and their view buttons
+function setupGalleryListeners() {
+    const items = getGalleryItems();
+    items.forEach((item, index) => {
+        const viewBtn = item.querySelector('.view-full-btn');
+        if (viewBtn) {
+            viewBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openImageModal(index);
+            });
+        }
+        // Also allow clicking on the entire item to view full image
+        item.addEventListener('click', () => {
+            openImageModal(index);
+        });
+    });
+}
+
+// Modal controls
+modalClose.addEventListener('click', closeImageModal);
+modalPrev.addEventListener('click', prevImage);
+modalNext.addEventListener('click', nextImage);
+
+// Close modal when clicking outside the image
+imageModal.addEventListener('click', (e) => {
+    if (e.target === imageModal) {
+        closeImageModal();
+    }
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+    if (!imageModal.classList.contains('active')) return;
+    
+    if (e.key === 'ArrowLeft') prevImage();
+    if (e.key === 'ArrowRight') nextImage();
+    if (e.key === 'Escape') closeImageModal();
+});
+
+// Touch/Swipe navigation for mobile photos
+let modalTouchStartX = 0;
+let modalTouchEndX = 0;
+let modalTouchStartY = 0;
+let modalTouchEndY = 0;
+
+imageModal.addEventListener('touchstart', (e) => {
+    if (!imageModal.classList.contains('active')) return;
+    modalTouchStartX = e.changedTouches[0].screenX;
+    modalTouchStartY = e.changedTouches[0].screenY;
+}, false);
+
+imageModal.addEventListener('touchend', (e) => {
+    if (!imageModal.classList.contains('active')) return;
+    modalTouchEndX = e.changedTouches[0].screenX;
+    modalTouchEndY = e.changedTouches[0].screenY;
+    handleModalSwipe();
+}, false);
+
+function handleModalSwipe() {
+    const swipeThreshold = 50;
+    const horizontalDiff = modalTouchStartX - modalTouchEndX;
+    const verticalDiff = Math.abs(modalTouchStartY - modalTouchEndY);
+    
+    // Only register swipe if it's more horizontal than vertical
+    if (Math.abs(horizontalDiff) > swipeThreshold && verticalDiff < 100) {
+        if (horizontalDiff > 0) {
+            // Swiped left, go to next photo
+            nextImage();
+        } else {
+            // Swiped right, go to previous photo
+            prevImage();
+        }
+    }
+}
+
+// Load More Images functionality
+const loadMoreBtn = document.getElementById('loadMoreBtn');
+const moreImages = [
+    { thumb: 'https://via.placeholder.com/300x300/a8d5ba/ffffff?text=Memory+7', full: 'https://via.placeholder.com/800x800/a8d5ba/ffffff?text=Memory+7', caption: '💚 New Memory 1' },
+    { thumb: 'https://via.placeholder.com/300x300/b8e6d5/ffffff?text=Memory+8', full: 'https://via.placeholder.com/800x800/b8e6d5/ffffff?text=Memory+8', caption: '✨ New Memory 2' },
+    { thumb: 'https://via.placeholder.com/300x300/c8dcc4/ffffff?text=Memory+9', full: 'https://via.placeholder.com/800x800/c8dcc4/ffffff?text=Memory+9', caption: '🌹 New Memory 3' }
+];
+
+loadMoreBtn.addEventListener('click', () => {
+    const galleryContainer = document.getElementById('galleryContainer');
+    
+    moreImages.forEach((image, index) => {
+        const galleryItem = document.createElement('div');
+        galleryItem.className = 'gallery-item';
+        galleryItem.setAttribute('data-fullimage', image.full);
+        galleryItem.innerHTML = `
+            <img src="${image.thumb}" alt="Memory">
+            <div class="gallery-overlay">
+                <p>${image.caption}</p>
+                <button class="view-full-btn">View Full Image 👁️</button>
+            </div>
+        `;
+        
+        galleryContainer.appendChild(galleryItem);
+        
+        // Add event listeners to new item
+        const viewBtn = galleryItem.querySelector('.view-full-btn');
+        if (viewBtn) {
+            viewBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const index = getGalleryItems().indexOf(galleryItem);
+                openImageModal(index);
+            });
+        }
+        
+        galleryItem.addEventListener('click', () => {
+            const index = getGalleryItems().indexOf(galleryItem);
+            openImageModal(index);
+        });
+    });
+    
+    // Update gallery captions array
+    galleryGalleryItems.push(
+        ...moreImages.map(img => ({ caption: img.caption }))
+    );
+    
+    // Hide load more button after first click (optional)
+    loadMoreBtn.style.opacity = '0.5';
+    loadMoreBtn.disabled = true;
+});
+
+// Initialize gallery on page load
+document.addEventListener('DOMContentLoaded', setupGalleryListeners);
+
+// ============================
+// FULLSCREEN GALLERY MODAL - NEW FEATURE
+// ============================
+
+/**
+ * GALLERY IMAGES CONFIGURATION
+ * 
+ * ADD MORE IMAGES HERE:
+ * Simply add new image objects to this array in the format shown below.
+ * The gallery will automatically display all images without requiring code changes.
+ * 
+ * Format:
+ * {
+ *     thumb: 'path/to/thumbnail.jpg',  // Small image for grid (used if thumb is provided)
+ *     full: 'path/to/fullsize.jpg',     // High quality image for lightbox
+ *     caption: 'Beautiful caption 💚'   // Text shown when hovering/viewing
+ * }
+ * 
+ * You can use:
+ * - Local file paths: 'images/photo1.jpg'
+ * - Full file paths: 'C:/Users/YourName/Pictures/photo.jpg'
+ * - URLs: 'https://example.com/image.jpg'
+ */
+const fullscreenGalleryImages = [
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260314-214716.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260314-214716.png',
+        caption: '💚 A moment in time'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260509-221035.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260509-221035.png',
+        caption: '✨ Pure happiness'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/IMG_20260530_142926.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/IMG_20260530_142926.png',
+        caption: '🌹 Unforgettable'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/IMG_20260408_194249.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/IMG_20260408_194249.png',
+        caption: '💫 Forever cherished'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260321-161014.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260321-161014.png',
+        caption: '📸 Love in focus'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260531-082013.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260531-082013.png',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/IMG_20260105_224235_0209.jpg',
+        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/IMG_20260105_224235_0209.jpg',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/IMG_20260408_194028.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/IMG_20260408_194028.png',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260317-071735.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260317-071735.png',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260521-201402.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260521-201402.png',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260527-210323.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260527-210323.png',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/IMG_20251229_214950_380.jpg',
+        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/IMG_20251229_214950_380.jpg',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260321-161133.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For%20our%20monthsary/for%20us/Screenshot_20260321-161133.png',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Screenshot 2026-01-23 140407.jpg',
+        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Screenshot 2026-01-23 140407.jpg',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/Screenshot 2026-01-25 222829.jpg',
+        full: 'file:///C:/Users/LENOVO/Pictures/Screenshot 2026-01-25 222829.jpg',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/IMG20260120211519.jpg',
+        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/IMG20260120211519.jpg',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/IMG20260527205123.jpg',
+        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/IMG20260527205123.jpg',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/IMG20260527205136.jpg',
+        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/IMG20260527205136.jpg',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260223-131400.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260223-131400.png',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260305-212913.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260305-212913.png',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260308-135326.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260308-135326.png',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260316-215651.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260316-215651.png',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260317-071722.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260317-071722.png',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260317-223024.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260317-223024.png',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260324-211509.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260324-211509.png',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-121732.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-121732.png',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-121744.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-121744.png',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-121909.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-121909.png',
+        caption: '👫 Together always'
+    },{
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-122028.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-122028.png',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-123314.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-123314.png',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-123314.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-123314.png',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-205928.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260329-205928.png',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260401-170655.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260401-170655.png',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260403-151033.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260403-151033.png',
+        caption: '👫 Together always'
+    },
+    {
+        thumb: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260430-121159.png',
+        full: 'file:///C:/Users/LENOVO/Pictures/For our monthsary/Shasha/Screenshot_20260430-121159.png',
+        caption: '👫 Together always'
+    },
+    
+    // ADD MORE IMAGES BELOW - Copy the format above and paste new entries here
+    // Example:
+    // {
+    //     thumb: 'path/to/your/image.jpg',
+    //     full: 'path/to/your/image-hq.jpg',
+    //     caption: '💚 Your custom caption'
+    // },
+];
+
+let fullscreenGalleryCurrentIndex = 0;
+let fullscreenGalleryTouchStartX = 0;
+let fullscreenGalleryTouchStartY = 0;
+
+// Zoom state variables
+let galleryImageZoomLevel = 1;
+let galleryImagePanX = 0;
+let galleryImagePanY = 0;
+let galleryLastTouchTime = 0;
+let galleryLastTouchX = 0;
+let galleryLastTouchY = 0;
+let galleryPinchStartDistance = 0;
+
+// Get fullscreen gallery elements
+const fullscreenGalleryModal = document.getElementById('fullscreenGalleryModal');
+const galleryModalGrid = document.getElementById('galleryModalGrid');
+const galleryBackBtn = document.getElementById('galleryBackBtn');
+const galleryLightboxModal = document.getElementById('galleryLightboxModal');
+const galleryLightboxImage = document.getElementById('galleryLightboxImage');
+const galleryLightboxCaption = document.getElementById('galleryLightboxCaption');
+const galleryLightboxClose = document.querySelector('.gallery-lightbox-close');
+const galleryLightboxPrev = document.querySelector('.gallery-lightbox-prev');
+const galleryLightboxNext = document.querySelector('.gallery-lightbox-next');
+const galleryModalPetals = document.getElementById('galleryModalPetals');
+const galleryZoomResetBtn = document.querySelector('.gallery-zoom-reset');
+const galleryImageContainer = document.querySelector('.gallery-image-container');
+
+/**
+ * Initialize fullscreen gallery
+ * Renders all images from the fullscreenGalleryImages array
+ */
+function initializeFullscreenGallery() {
+    renderGalleryGrid();
+    setupFullscreenGalleryEventListeners();
+    createGalleryPetals();
+}
+
+/**
+ * Render gallery grid with all images
+ * Creates responsive grid of clickable image items
+ */
+function renderGalleryGrid() {
+    galleryModalGrid.innerHTML = '';
+    
+    fullscreenGalleryImages.forEach((image, index) => {
+        const galleryItem = document.createElement('div');
+        galleryItem.className = 'gallery-modal-item';
+        
+        const img = document.createElement('img');
+        img.src = image.thumb || image.full;
+        img.alt = image.caption;
+        img.loading = 'lazy';
+        
+        const overlay = document.createElement('div');
+        overlay.className = 'gallery-modal-item-overlay';
+        
+        const caption = document.createElement('div');
+        caption.className = 'gallery-modal-item-caption';
+        caption.textContent = image.caption;
+        
+        overlay.appendChild(caption);
+        galleryItem.appendChild(img);
+        galleryItem.appendChild(overlay);
+        
+        galleryItem.addEventListener('click', () => openFullscreenGalleryLightbox(index));
+        
+        galleryModalGrid.appendChild(galleryItem);
+    });
+}
+
+/**
+ * Open fullscreen gallery modal
+ */
+function openFullscreenGallery() {
+    fullscreenGalleryModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+/**
+ * Close fullscreen gallery modal
+ */
+function closeFullscreenGallery() {
+    fullscreenGalleryModal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+/**
+ * Open lightbox viewer for a specific image in fullscreen gallery
+ */
+function openFullscreenGalleryLightbox(index) {
+    if (index < 0) {
+        fullscreenGalleryCurrentIndex = fullscreenGalleryImages.length - 1;
+    } else if (index >= fullscreenGalleryImages.length) {
+        fullscreenGalleryCurrentIndex = 0;
+    } else {
+        fullscreenGalleryCurrentIndex = index;
+    }
+    
+    const image = fullscreenGalleryImages[fullscreenGalleryCurrentIndex];
+    galleryLightboxImage.src = image.full;
+    galleryLightboxCaption.textContent = image.caption;
+    
+    // Update image counter
+    document.getElementById('currentImageNum').textContent = fullscreenGalleryCurrentIndex + 1;
+    document.getElementById('totalImages').textContent = fullscreenGalleryImages.length;
+    
+    // Reset zoom
+    resetGalleryImageZoom();
+    
+    galleryLightboxModal.classList.add('active');
+}
+
+/**
+ * Close lightbox modal in fullscreen gallery
+ */
+function closeFullscreenGalleryLightbox() {
+    galleryLightboxModal.classList.remove('active');
+}
+
+/**
+ * Navigate to next image in lightbox
+ */
+function nextFullscreenGalleryImage() {
+    fullscreenGalleryCurrentIndex++;
+    openFullscreenGalleryLightbox(fullscreenGalleryCurrentIndex);
+}
+
+/**
+ * Navigate to previous image in lightbox
+ */
+function prevFullscreenGalleryImage() {
+    fullscreenGalleryCurrentIndex--;
+    openFullscreenGalleryLightbox(fullscreenGalleryCurrentIndex);
+}
+
+/**
+ * Create floating flower petals in gallery modal
+ */
+function createGalleryPetals() {
+    const flowers = ['🌷', '🌹', '🌸', '🌺'];
+    const petalCount = 10;
+    
+    // Clear existing petals
+    galleryModalPetals.innerHTML = '';
+    
+    for (let i = 0; i < petalCount; i++) {
+        const petal = document.createElement('div');
+        petal.className = 'gallery-petal';
+        petal.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+        
+        const size = Math.random() * 20 + 20;
+        petal.style.fontSize = size + 'px';
+        
+        petal.style.left = Math.random() * 100 + '%';
+        petal.style.top = -50 + 'px';
+        
+        const duration = Math.random() * 10 + 10;
+        petal.style.animationDuration = duration + 's';
+        
+        petal.style.animationDelay = Math.random() * 5 + 's';
+        
+        galleryModalPetals.appendChild(petal);
+    }
+    
+    // Recreate petals periodically for continuous effect
+    setInterval(() => {
+        if (fullscreenGalleryModal.classList.contains('active')) {
+            createGalleryPetals();
+        }
+    }, 15000);
+}
+
+/**
+ * Reset gallery image zoom to normal
+ */
+function resetGalleryImageZoom() {
+    galleryImageZoomLevel = 1;
+    galleryImagePanX = 0;
+    galleryImagePanY = 0;
+    applyGalleryImageTransform();
+    galleryLightboxImage.classList.remove('zoomed');
+}
+
+/**
+ * Apply zoom and pan transform to image
+ */
+function applyGalleryImageTransform() {
+    galleryLightboxImage.style.transform = `translate(${galleryImagePanX}px, ${galleryImagePanY}px) scale(${galleryImageZoomLevel})`;
+}
+
+/**
+ * Zoom in on image
+ */
+function zoomGalleryImageIn() {
+    if (galleryImageZoomLevel < 3) {
+        galleryImageZoomLevel += 0.5;
+        if (galleryImageZoomLevel > 1) {
+            galleryLightboxImage.classList.add('zoomed');
+        }
+        applyGalleryImageTransform();
+    }
+}
+
+/**
+ * Zoom out from image
+ */
+function zoomGalleryImageOut() {
+    if (galleryImageZoomLevel > 1) {
+        galleryImageZoomLevel -= 0.5;
+        if (galleryImageZoomLevel <= 1) {
+            galleryImageZoomLevel = 1;
+            galleryImagePanX = 0;
+            galleryImagePanY = 0;
+            galleryLightboxImage.classList.remove('zoomed');
+        }
+        applyGalleryImageTransform();
+    }
+}
+
+/**
+ * Handle pinch zoom gesture
+ */
+function handleGalleryPinchZoom(distance) {
+    if (galleryPinchStartDistance === 0) {
+        galleryPinchStartDistance = distance;
+        return;
+    }
+    
+    const scale = distance / galleryPinchStartDistance;
+    const newZoom = galleryImageZoomLevel * scale;
+    
+    if (newZoom > 1 && newZoom < 3) {
+        galleryImageZoomLevel = newZoom;
+        applyGalleryImageTransform();
+    }
+}
+
+/**
+ * Calculate distance between two touch points
+ */
+function getGalleryTouchDistance(touches) {
+    if (touches.length < 2) return 0;
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
+/**
+ * Setup event listeners for fullscreen gallery
+ */
+function setupFullscreenGalleryEventListeners() {
+    // Back button
+    galleryBackBtn.addEventListener('click', closeFullscreenGallery);
+    
+    // Lightbox controls
+    galleryLightboxClose.addEventListener('click', closeFullscreenGalleryLightbox);
+    galleryLightboxPrev.addEventListener('click', prevFullscreenGalleryImage);
+    galleryLightboxNext.addEventListener('click', nextFullscreenGalleryImage);
+    
+    // Zoom reset button
+    if (galleryZoomResetBtn) {
+        galleryZoomResetBtn.addEventListener('click', resetGalleryImageZoom);
+    }
+    
+    // Close lightbox when clicking outside image
+    galleryLightboxModal.addEventListener('click', (e) => {
+        if (e.target === galleryLightboxModal) {
+            closeFullscreenGalleryLightbox();
+        }
+    });
+    
+    // Keyboard navigation for lightbox
+    document.addEventListener('keydown', (e) => {
+        if (!galleryLightboxModal.classList.contains('active')) return;
+        
+        if (e.key === 'ArrowRight') {
+            nextFullscreenGalleryImage();
+        } else if (e.key === 'ArrowLeft') {
+            prevFullscreenGalleryImage();
+        } else if (e.key === 'Escape') {
+            closeFullscreenGalleryLightbox();
+        } else if (e.key === '+' || e.key === '=') {
+            e.preventDefault();
+            zoomGalleryImageIn();
+        } else if (e.key === '-') {
+            e.preventDefault();
+            zoomGalleryImageOut();
+        }
+    });
+    
+    // Image double-tap zoom
+    let galleryDoubleTapTimer = null;
+    galleryLightboxImage.addEventListener('click', (e) => {
+        const currentTime = new Date().getTime();
+        const tapLength = currentTime - galleryLastTouchTime;
+        
+        if (tapLength < 300 && galleryDoubleTapTimer === null) {
+            // Double tap detected
+            e.preventDefault();
+            if (galleryImageZoomLevel > 1) {
+                resetGalleryImageZoom();
+            } else {
+                galleryImageZoomLevel = 2;
+                galleryLightboxImage.classList.add('zoomed');
+                applyGalleryImageTransform();
+            }
+            galleryLastTouchTime = 0;
+        } else {
+            // Single tap
+            galleryLastTouchTime = currentTime;
+            galleryDoubleTapTimer = setTimeout(() => {
+                galleryDoubleTapTimer = null;
+            }, 300);
+        }
+    });
+    
+    // Touch events for swipe and pinch zoom
+    galleryImageContainer.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+            // Single touch - swipe
+            fullscreenGalleryTouchStartX = e.touches[0].clientX;
+            fullscreenGalleryTouchStartY = e.touches[0].clientY;
+            galleryLastTouchX = fullscreenGalleryTouchStartX;
+            galleryLastTouchY = fullscreenGalleryTouchStartY;
+        } else if (e.touches.length === 2) {
+            // Two finger touch - pinch zoom
+            e.preventDefault();
+            galleryPinchStartDistance = getGalleryTouchDistance(e.touches);
+        }
+    }, { passive: false });
+    
+    galleryImageContainer.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 2) {
+            // Pinch zoom
+            e.preventDefault();
+            const distance = getGalleryTouchDistance(e.touches);
+            handleGalleryPinchZoom(distance);
+        }
+    }, { passive: false });
+    
+    galleryImageContainer.addEventListener('touchend', (e) => {
+        if (e.touches.length === 0) {
+            // All touches released
+            galleryPinchStartDistance = 0;
+            
+            // Check for swipe
+            if (Math.abs(fullscreenGalleryTouchStartX) > 0) {
+                const currentX = e.changedTouches[0].clientX;
+                const currentY = e.changedTouches[0].clientY;
+                const diffX = fullscreenGalleryTouchStartX - currentX;
+                const diffY = fullscreenGalleryTouchStartY - currentY;
+                
+                // Only detect horizontal swipes if not zoomed
+                if (galleryImageZoomLevel <= 1 && Math.abs(diffX) > Math.abs(diffY)) {
+                    if (diffX > 50) {
+                        // Swiped left - show next image
+                        nextFullscreenGalleryImage();
+                    } else if (diffX < -50) {
+                        // Swiped right - show previous image
+                        prevFullscreenGalleryImage();
+                    }
+                }
+                
+                fullscreenGalleryTouchStartX = 0;
+                fullscreenGalleryTouchStartY = 0;
+            }
+        }
+    }, { passive: false });
+    
+    // Mouse wheel zoom (for desktop users)
+    galleryImageContainer.addEventListener('wheel', (e) => {
+        if (galleryLightboxModal.classList.contains('active')) {
+            e.preventDefault();
+            if (e.deltaY < 0) {
+                zoomGalleryImageIn();
+            } else {
+                zoomGalleryImageOut();
+            }
+        }
+    }, { passive: false });
+    
+    // Prevent default drag behavior
+    galleryLightboxImage.addEventListener('dragstart', (e) => {
+        e.preventDefault();
+    });
+}
+
+/**
+ * Handle swipe gestures in lightbox
+ */
+function handleFullscreenGallerySwipe() {
+    const touchEndX = event.changedTouches[0].screenX;
+    const touchEndY = event.changedTouches[0].screenY;
+    const diffX = fullscreenGalleryTouchStartX - touchEndX;
+    const diffY = fullscreenGalleryTouchStartY - touchEndY;
+    
+    // Only detect horizontal swipes (not vertical)
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX > 50) {
+            // Swiped left - show next image
+            nextFullscreenGalleryImage();
+        } else if (diffX < -50) {
+            // Swiped right - show previous image
+            prevFullscreenGalleryImage();
+        }
+    }
+}
+
+/**
+ * Update "More Images" button to open fullscreen gallery
+ */
+if (loadMoreBtn) {
+    // Remove the old event listener by cloning and replacing
+    const newLoadMoreBtn = loadMoreBtn.cloneNode(true);
+    loadMoreBtn.parentNode.replaceChild(newLoadMoreBtn, loadMoreBtn);
+    
+    // Add new click listener
+    newLoadMoreBtn.addEventListener('click', openFullscreenGallery);
+    newLoadMoreBtn.style.opacity = '1';
+    newLoadMoreBtn.disabled = false;
+}
+
+// Initialize fullscreen gallery when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeFullscreenGallery);
+} else {
+    initializeFullscreenGallery();
+}
