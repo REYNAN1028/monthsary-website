@@ -130,9 +130,9 @@ setInterval(() => {
 // ============================
 
 function updateCountdown() {
-    // Calculate next monthsary (28 days from today)
+    // Calculate next monthsary (30 days from today)
     const nextMonthsary = new Date();
-    nextMonthsary.setDate(nextMonthsary.getDate() + 28);
+    nextMonthsary.setDate(nextMonthsary.getDate() + 30);
 
     const timer = setInterval(() => {
         const now = new Date().getTime();
